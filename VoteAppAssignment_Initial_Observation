@@ -1,0 +1,76 @@
+Order of pods coming to Running state - 
+
+db -> redis -> result -> vote -> worker
+
+Time taken for the first pod to come to Running state is ~20s.
+Total time taken for all the pors to come to Running state is ~50s.
+
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get po -n default
+NAME                      READY   STATUS              RESTARTS   AGE
+db-b54cd94f4-5b2r7        0/1     ContainerCreating   0          12s
+redis-868d64d78-zsbl8     0/1     ContainerCreating   0          12s
+result-5d57b59f4b-j9nv8   0/1     ContainerCreating   0          11s
+vote-94849dc97-wrmr4      0/1     ContainerCreating   0          11s
+worker-dd46d7584-9rf58    0/1     ContainerCreating   0          11s
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get po -n default
+NAME                      READY   STATUS              RESTARTS   AGE
+db-b54cd94f4-5b2r7        1/1     Running             0          16s
+redis-868d64d78-zsbl8     0/1     ContainerCreating   0          16s
+result-5d57b59f4b-j9nv8   0/1     ContainerCreating   0          15s
+vote-94849dc97-wrmr4      0/1     ContainerCreating   0          15s
+worker-dd46d7584-9rf58    0/1     ContainerCreating   0          15s
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get po -n default
+NAME                      READY   STATUS              RESTARTS   AGE
+db-b54cd94f4-5b2r7        1/1     Running             0          22s
+redis-868d64d78-zsbl8     1/1     Running             0          22s
+result-5d57b59f4b-j9nv8   0/1     ContainerCreating   0          21s
+vote-94849dc97-wrmr4      0/1     ContainerCreating   0          21s
+worker-dd46d7584-9rf58    0/1     ContainerCreating   0          21s
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get po -n default
+NAME                      READY   STATUS              RESTARTS   AGE
+db-b54cd94f4-5b2r7        1/1     Running             0          35s
+redis-868d64d78-zsbl8     1/1     Running             0          35s
+result-5d57b59f4b-j9nv8   1/1     Running             0          34s
+vote-94849dc97-wrmr4      0/1     ContainerCreating   0          34s
+worker-dd46d7584-9rf58    0/1     ContainerCreating   0          34s
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get po -n default
+NAME                      READY   STATUS              RESTARTS   AGE
+db-b54cd94f4-5b2r7        1/1     Running             0          43s
+redis-868d64d78-zsbl8     1/1     Running             0          43s
+result-5d57b59f4b-j9nv8   1/1     Running             0          42s
+vote-94849dc97-wrmr4      1/1     Running             0          42s
+worker-dd46d7584-9rf58    0/1     ContainerCreating   0          42s
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get po -n default
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-5b2r7        1/1     Running   0          50s
+redis-868d64d78-zsbl8     1/1     Running   0          50s
+result-5d57b59f4b-j9nv8   1/1     Running   0          49s
+vote-94849dc97-wrmr4      1/1     Running   0          49s
+worker-dd46d7584-9rf58    1/1     Running   0          49s
+
+
+When we delete all the pods, they come up quickly, may be less than ~15s.
+
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get svc
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+db           ClusterIP   10.105.21.41     <none>        5432/TCP         10m
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP          19m
+redis        ClusterIP   10.99.239.202    <none>        6379/TCP         10m
+result       NodePort    10.108.52.238    <none>        5001:31001/TCP   10m
+vote         NodePort    10.102.247.111   <none>        5000:31000/TCP   10m
+
+[root@ip-172-31-43-223 k8s-specifications]# kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+db       1/1     1            1           11m
+redis    1/1     1            1           11m
+result   1/1     1            1           11m
+vote     1/1     1            1           11m
+worker   1/1     1            1           11m
+
