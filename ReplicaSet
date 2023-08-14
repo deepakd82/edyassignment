@@ -1,0 +1,13 @@
+When we want to run a process on all the nodes of the cluster, we can run cron jobs when a node boots (or) reboots. 
+As These are run on the node itself, we have few drawbacks such as dependency on the specific runtime environments, terminating once the node is evicted.
+To fulfill this, K8s has comeup with a controlled called as Daemon Set, which is basically created for a purpose to ensure that the pods that are managed
+are run on all the cluster nodes.
+
+Some typical uses of a DaemonSet are:
+
+running a cluster storage daemon on every node
+  - glusterd - ceph
+running a logs collection daemon on every node
+  - fluentd - logstash
+running a node monitoring daemon on every node
+  - Prometheus Node Exporter - collectd - Datadog agent
